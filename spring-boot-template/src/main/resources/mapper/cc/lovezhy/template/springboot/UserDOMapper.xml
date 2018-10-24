@@ -20,18 +20,22 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cc.lovezhy.template.springboot.dataobject.UserDO" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="cc.lovezhy.template.springboot.dataobject.UserDO">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user (id, name, gender, 
       gmt_create)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
       #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cc.lovezhy.template.springboot.dataobject.UserDO">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+      id,
       <if test="name != null">
         name,
       </if>
@@ -43,9 +47,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+      #{id,jdbcType=INTEGER},
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>

@@ -66,6 +66,14 @@
             <version>27.0-jre</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.51</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -83,12 +91,13 @@
                     <configurationFile>
                         src/main/resources/config/mybatisGeneratorConfig.xml
                     </configurationFile>
-                    <overwrite>true</overwrite>
+                    <overwrite>false</overwrite>
                     <verbose>true</verbose>
                 </configuration>
                 <executions>
                     <execution>
                         <id>Generate MyBatis Artifacts</id>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>

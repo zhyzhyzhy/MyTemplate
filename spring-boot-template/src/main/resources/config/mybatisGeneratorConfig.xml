@@ -43,6 +43,7 @@
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="Mysql"/>
         </table>
 
 
