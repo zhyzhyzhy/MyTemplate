@@ -6,7 +6,10 @@ import com.alibaba.fastjson.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisStringCommands;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -108,5 +111,15 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public void setToCacheAsync(String key, String value) {
         setToCacheAsync(key, value, TTL_COMMON, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public boolean setToCacheIfAbsent(String key, String value, long timeout, TimeUnit timeUnit) {
+        Boolean res = template.execute((RedisCallback<Boolean>) connection -> connection.stringCommands()
+                .set(key.getBytes(), value.getBytes(), Expiration.from(timeout, timeUnit), RedisStringCommands.SetOption.SET_IF_ABSENT));
+        if (res == null) {
+            return false;
+        }
+        return res;
     }
 }

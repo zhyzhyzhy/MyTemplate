@@ -31,4 +31,6 @@ public interface RedisService {
     void setToCache(String key, String value);
 
     void setToCacheAsync(String key, String value);
+
+    boolean setToCacheIfAbsent(String key, String value, long timeout, TimeUnit timeUnit);
 }
