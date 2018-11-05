@@ -23,7 +23,7 @@ public class QuartzConfig {
                     .build();
 
             Trigger trigger = TriggerBuilder.newTrigger()
-                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever())
+                    .withSchedule(SimpleScheduleBuilder.repeatHourlyForever())
                     .build();
 
             scheduler.scheduleJob(jobDetail, trigger);
