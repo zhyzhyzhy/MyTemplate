@@ -14,9 +14,8 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    @Cacheable(cacheNames = "user", key = "'user:' + #id")
+    @Cacheable(cacheNames = "user", key = "#id")
     public User getUserById(Integer id) {
-        System.out.println("FromDB");
         return userMapper.selectById(id);
     }
 
